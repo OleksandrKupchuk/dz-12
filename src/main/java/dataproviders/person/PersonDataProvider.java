@@ -11,53 +11,33 @@ public class PersonDataProvider {
 
     @DataProvider
     public Object[][] firstName() {
-        Man man = new Man();
-        man.setFirstName("Oleksandr");
-
-        Woman woman = new Woman();
-        woman.setFirstName("Ira");
         return new Object [][] {
-                {man.getFirstName(), FirstNames.Oleksandr},
-                {woman.getFirstName(), FirstNames.Ira}
+                {"Oleksandr", FirstNames.Oleksandr},
+                {"Ira", FirstNames.Ira}
         };
     }
 
     @DataProvider
     public Object[][] lastName() {
-        Man man = new Man();
-        man.setLastName("Levko");
-
-        Woman woman = new Woman();
-        woman.setLastName("Vynyuk");
         return new Object [][] {
-                {man.getLastName(), LastNames.Levko},
-                {woman.getLastName(), LastNames.Vynyuk}
+                {"Levko", LastNames.Levko},
+                {"Vynyuk", LastNames.Vynyuk}
         };
     }
 
     @DataProvider
     public Object[][] age() {
-        Man man = new Man();
-        man.setAge(25);
-
-        Woman woman = new Woman();
-        woman.setAge(28);
         return new Object [][] {
-                {Ages.twenty_five, man.getAge()},
-                {Ages.twenty_eight, woman.getAge()}
+                {25, Ages.twenty_five},
+                {28, Ages.twenty_eight}
         };
     }
 
     @DataProvider
     public Object[][] partner() {
-        Man man = new Man();
-        man.setPartner("Ira");
-
-        Woman woman = new Woman();
-        woman.setPartner("Oleksandr");
         return new Object [][] {
-                {man.getPartner(), FirstNames.Ira},
-                {woman.getPartner(), FirstNames.Oleksandr}
+                {"Ira", FirstNames.Ira},
+                {"Oleksandr", FirstNames.Oleksandr}
         };
     }
 
@@ -78,8 +58,8 @@ public class PersonDataProvider {
         Woman woman = new Woman("Ira", "Vynyuk", 61);
 
         return new Object [][] {
-                {man.isRetired()},
-                {woman.isRetired()}
+                {man.isRetired(), man.getFirstName()},
+                {woman.isRetired(), woman.getFirstName()}
         };
     }
 
@@ -87,15 +67,13 @@ public class PersonDataProvider {
     public Object[][] registerPartnership() {
         Woman ira = new Woman("Ira", "Vynyuk", 28);
         Man oleksandr = new Man("Oleksandr", "Levko", 27);
-        oleksandr.registerPartnership(ira.getLastName());
 
-        Man ivan = new Man("Ivan", "Levko", 22);
-        Woman olga = new Woman("Olga", "Vynyuk", 21);
-        olga.registerPartnership(ivan.getLastName());
+        Woman olga = new Woman("Olga", "Vynyuk", 28);
+        Man ivan = new Man("Ivan", "Levko", 27);
 
         return new Object [][] {
-                {oleksandr.getPartner(), LastNames.Vynyuk},
-                {olga.getPartner(), LastNames.Levko}
+                {oleksandr, ira, LastNames.Vynyuk},
+                {olga, ivan, LastNames.Levko}
         };
     }
 
@@ -103,17 +81,24 @@ public class PersonDataProvider {
     public Object[][] deregisterPartnershipTrue() {
         Woman ira = new Woman("Ira", "Vynyuk", 28);
         Man oleksandr = new Man("Oleksandr", "Levko", 27);
-        oleksandr.registerPartnership(ira.getLastName());
-        oleksandr.deregisterPartnership(true);
-
-        Man ivan = new Man("Ivan", "Levko", 27);
-        Woman olga = new Woman("Olga", "Vynyuk", 28);
-        olga.registerPartnership(ivan.getLastName());
-        olga.deregisterPartnership(true);
 
         return new Object [][] {
-                {oleksandr.getLastName(), LastNames.Levko},
-                {olga.getPartner(), LastNames.Vynyuk}
+                {oleksandr, ira},
+                {ira, oleksandr}
+        };
+    }
+
+    @DataProvider
+    public Object[][] deregisterPartnershipFalse() {
+        Woman ira = new Woman("Ira", "Vynyuk", 28);
+        Man oleksandr = new Man("Oleksandr", "Levko", 27);
+
+        Woman olga = new Woman("Olga", "Vynyuk", 28);
+        Man ivan = new Man("Ivan", "Levko", 27);
+
+        return new Object [][] {
+                {oleksandr, ira, LastNames.Vynyuk},
+                {olga, ivan, LastNames.Levko}
         };
     }
 }
